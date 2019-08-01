@@ -1,0 +1,8 @@
+{
+  "name": "BConsorcio",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular-rut": "git://github.com/jaimeguaman/angular-rut#chrome-bug-patch",
+    "message-center": "git://github.com/jaimeguaman/message-center.git#master"
+  }
+}

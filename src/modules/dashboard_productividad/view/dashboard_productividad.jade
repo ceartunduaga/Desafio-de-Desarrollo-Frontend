@@ -1,0 +1,170 @@
+div.container-fluid.dash
+  div.row
+    div.col-lg-12.header.px-0
+      nav.navbar.header
+        div.container-fluid
+          div.navbar-header
+            button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false")
+              i.fas.fa-bars
+
+            a(href="#") 
+              img(src="images/logo.PNG")
+
+          div.collapse.navbar-collapse(id="bs-example-navbar-collapse-1")
+            ul.nav.navbar-nav.ml-3
+              li
+                a(href="#") Agenda 
+                  span(class="sr-only") (current) 
+              li.active
+                a(href="#") Productividad
+            ul.nav.navbar-nav.navbar-right.dots
+              li
+                a(href='#')
+                  i.fas.fa-bell
+                    mark 100
+              li
+                a(href='#') 
+                  i.fas.fa-user-circle
+
+            form.navbar-form.navbar-right
+              div.input-group
+                input.form-control(type='text', placeholder='Buscar paciente')
+                span.input-group-btn
+                  button.btn.btn-default.search(type='button')
+                    i.fas.fa-search
+
+
+div.container.body
+  .row.mx-0
+    .col-lg-12.col-md-12.col-sm-12.col-xs-8.px-0
+      p.fontwB INFORME DE PRODUCTIVIDAD
+    .col-lg-5.col-md-6.col-sm-6.col-xs-2.d-none-sm
+      button.btn.btn-dash(type='button') 
+        i.fas.fa-paper-plane
+
+    .col-lg-5.col-md-6.col-sm-6.col-xs-2.d-none-sm
+      button.btn.btn-dash(type='button') 
+        i.fas.fa-download
+
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12.px-0.d-block-sm 
+      .col-lg-7.col-md-7.col-sm-12.col-xs-12.px-0
+        .col-lg-4.col-md-4.col-sm-4.col-xs-12.px-0
+          form-group
+            label(for='sel1') Sucursal
+            select#sel1.form-control
+              option(ng-repeat="suc in sucursal track by $index") {{suc}}
+        .col-lg-4.col-md-4.col-sm-4.col-xs-12
+          form-group
+            label(for='sel1') Periodo
+            select#sel1.form-control
+              option(ng-repeat="suc in periodo track by $index") {{suc}}
+        .col-lg-4.col-md-4.col-sm-4.col-xs-12
+          form-group
+            label(for='sel1') Mes
+            select#sel1.form-control
+              option(ng-repeat="suc in mes track by $index") {{suc}}
+      .col-lg-5.col-md-5.col-sm-12.col-xs-12.padT
+        .col-lg-8.col-md-8.col-sm-9.col-xs-6.text-right
+          button.btn.btn-dash(type='button') ENVIAR POR CORREO
+        .col-lg-3.col-md-3.col-sm-3.col-xs-6.text-right
+          button.btn.btn-dash(type='button') DESCARGAR
+    
+    .col-lg-12.col-md-12.col-sm-12.col-xs-12.phead.px-0
+      .col-lg-6.col-md-6.col-sm-6.col-xs-12.my-3(ng-repeat="item in data" ng-class="{'impar': $index % 2 == 1,'par': $index % 2 != 1}")
+        .w3-container.card
+          .w3-card-4
+            header.w3-container.w3-blue.text-center.font-weight-bold
+              .col-lg-9.col-md-9.col-sm-9.col-xs-8.text-left.uppercase.px-0
+                p {{item.tipo}}
+              .col-lg-3.col-md-3.col-sm-3.col-xs-4.text-right.px-0
+                a(href='#'  data-toggle="modal" data-target="#flipFlop{{$index}}")
+                  .col-md-1.col-md-1.col-sm-1.col-xs-1.col-md-offset-3.modG.br-0
+                      i.fas.fa-chart-pie
+                  .col-md-1.col-md-1.col-sm-1.col-xs-1.modG
+                      i.fas.fa-list-ul
+            .w3-container.row
+              table.col-lg-12.col-md-12.col-sm-12.col-xs-12
+                tbody
+                  tr(ng-if="item.tipo=='Citas ambulatorias'")
+                    td.text-right.uppercase Fonasa 
+                    th.text-left {{item.totalF}} 
+                  tr(ng-if="item.tipo=='Citas ambulatorias'")
+                    td.text-right.uppercase Isapre 
+                    th.text-left {{item.totalI}}
+                  tr(ng-if="item.tipo!='Citas ambulatorias'" ng-class="{'h-b': item.tipo!='Citas ambulatorias'}")
+                    td.text-right.uppercase Cantidad 
+                    th.text-left {{item.cantidad}}
+            footer.w3-container.w3-blue.text-center.font-weight-bold
+              p Total:   
+                span {{item.total| currency}}
+  
+        .modal.fade(tabindex='-1', role='dialog', aria-labelledby='modalLabel', aria-hidden='true',id="flipFlop{{$index}}")
+          .modal-dialog.modal-lg(role='document')
+            .modal-content
+              .modal-header.text-center
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                  i.far.fa-times-circle(aria-hidden='true')
+                h4#modalLabel.modal-title.uppercase.font-weight-bold {{item.tipo}}
+              .modal-body
+                form.form-inline.table-responsive
+                  .col-lg-2.col-md-2.col-sm-2.col-xs-2.text-right.px-0
+                    a(href='')
+                      .col-md-1.col-md-1.col-sm-1.col-xs-1.modG.br-0
+                          i.fas.fa-chart-pie
+                      .col-md-1.col-md-1.col-sm-1.col-xs-1.modAct
+                          i.fas.fa-list-ul
+                  .col-lg-10.col-md-10.col-sm-10.col-xs-10.text-right
+                    .form-group
+                        input.form-control.mr-3(type='text', ng-model='search', placeholder='Filtro rápido')
+                        label 2 resultados
+                  table.table.table-hover
+                    thead
+                      tr
+                        th(ng-click="sort('id')")
+                          | Id
+                          span.glyphicon.sort-icon(ng-show="sortKey=='id'", ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}")
+                        th(ng-click="sort('anio')")
+                          | Año
+                          span.glyphicon.sort-icon(ng-show="sortKey=='anio'", ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}")
+                        th(ng-click="sort('mes')")
+                          | Mes
+                          span.glyphicon.sort-icon(ng-show="sortKey=='mes'", ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}")
+                        th(ng-click="sort('cantidad')")
+                          | Cantidad
+                          span.glyphicon.sort-icon(ng-show="sortKey=='cantidad'", ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}")
+                        th(ng-click="sort('prevision')")
+                          | Prevision
+                          span.glyphicon.sort-icon(ng-show="sortKey=='prevision'", ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}")
+                        th(ng-click="sort('sucursal')")
+                          | Sucursal
+                          span.glyphicon.sort-icon(ng-show="sortKey=='sucursal'", ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}")
+                        th(ng-click="sort('tipo')")
+                          | Tipo
+                          span.glyphicon.sort-icon(ng-show="sortKey=='tipo'", ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}")
+                        th(ng-click="sort('total')")
+                          | Total
+                          span.glyphicon.sort-icon(ng-show="sortKey=='total'", ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}")
+                    tbody(ng-init="totalIterations = []")
+                      tr(ng-repeat='user in item.datas|orderBy:sortKey:reverse|filter:search' ng-init="countInit()" )
+                        td {{user.id}}
+                        td {{user.anio}}
+                        td {{user.mes}}
+                        td {{user.cantidad}}
+                        td {{user.prevision}}
+                        td {{user.sucursal}}
+                        td {{user.tipo}}
+                        td {{user.total}}
+              .modal-footer.uppercase
+                button.btn.btn-dash(type='button', data-dismiss='modal') Close
+                button.btn.btn-dashpri(type='button', data-dismiss='modal') Enviar por correo 
+                button.btn.btn-dashpri(type='button', data-dismiss='modal') Descargar
+
+
+      .col-lg-12.col-md-12.col-sm-12.col-xs-12.card
+        .w3-container
+          .w3-card-4
+           footer.w3-container.w3-blue.text-center.font-weight-bold
+              p Total:  
+                span {{total| currency : "$" : 0}}
+      
+    
